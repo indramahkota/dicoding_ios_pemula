@@ -8,17 +8,142 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+  let coffeeList: [Coffee] = Bundle.main.decode("coffee.json")
+  
+  var body: some View {
+    NavigationView {
+      List(coffeeList) { coffee in
+        NavigationLink(destination: CoffeeDetailView(coffee: coffee)) {
+          HStack {
+            AsyncImage(url: URL(string: coffee.image_url)) { image in
+              image.resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 80)
+                .cornerRadius(10)
+            } placeholder: {
+              ProgressView()
+            }
+            
+            VStack(alignment: .leading) {
+              Text(coffee.name)
+                .font(.headline)
+              Text(coffee.region)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            }
+          }
         }
-        .padding()
+      }
+      .navigationTitle("Coffee Selection")
+      .toolbar {
+        NavigationLink(destination: ProfileView()) {
+          Image(systemName: "person.crop.circle")
+        }
+      }
     }
+  }
 }
 
-#Preview {
-    ContentView()
+struct CoffeeDetailView: View {
+  let coffee: Coffee
+  
+  var body: some View {
+    ScrollView {
+      VStack(alignment: .leading) {
+        AsyncImage(url: URL(string: coffee.image_url)) { image in
+          image.resizable()
+            .scaledToFit()
+            .cornerRadius(10)
+        } placeholder: {
+          ProgressView()
+        }
+        .frame(height: 250)
+        
+        Text(coffee.name)
+          .font(.largeTitle)
+          .bold()
+          .padding(.top, 10)
+        
+        Text(coffee.description)
+          .font(.body)
+          .foregroundColor(.gray)
+          .padding(.top, 5)
+        
+        HStack {
+          Text("Price: $") + Text(String(format: "%.2f", coffee.price))
+          Spacer()
+          Text("Weight: \(coffee.weight)g")
+        }
+        .padding()
+        
+        Text("Flavor Profile: " + coffee.flavor_profile.joined(separator: ", "))
+          .padding(.bottom, 5)
+        
+        Text("Grind Options: " + coffee.grind_option.joined(separator: ", "))
+          .padding(.bottom, 5)
+        
+        Text("Roast Level: \(coffee.roast_level)")
+          .padding(.bottom, 5)
+      }
+      .padding()
+    }
+  }
+}
+
+struct ProfileView: View {
+  var body: some View {
+    VStack {
+      AsyncImage(url: URL(string: "https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!) { phase in
+        switch phase {
+        case .empty:
+          ProgressView()
+            .progressViewStyle(CircularProgressViewStyle())
+        case .success(let image):
+          image
+            .resizable()
+            .scaledToFill()
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+            .padding()
+        case .failure:
+          Image(systemName: "exclamationmark.triangle.fill")
+            .resizable()
+            .frame(width: 100, height: 100)
+            .foregroundColor(.red)
+            .padding()
+        @unknown default:
+          EmptyView()
+        }
+      }
+      
+      Text("Indra Mahkota")
+        .font(.title2)
+        .bold()
+        .padding(.bottom, 2)
+      
+      Text("This app is designed to showcase various coffee types with beautiful UI and smooth interactions, following Apple’s design guidelines.")
+        .multilineTextAlignment(.center)
+        .padding()
+    }
+    .navigationTitle("Profile")
+  }
+}
+
+extension Bundle {
+  func decode<T: Decodable>(_ file: String) -> T {
+    guard let url = url(forResource: file, withExtension: nil) else {
+      fatalError("Failed to locate \(file) in bundle.")
+    }
+    
+    guard let data = try? Data(contentsOf: url) else {
+      fatalError("Failed to load \(file) from bundle.")
+    }
+    
+    let decoder = JSONDecoder()
+    guard let loaded = try? decoder.decode(T.self, from: data) else {
+      fatalError("Failed to decode \(file) from bundle.")
+    }
+    
+    return loaded
+  }
 }

@@ -45,6 +45,11 @@
 			path = CoffeeAppUITests;
 			sourceTree = "<group>";
 		};
+		8A7BADD02D48980300CC852C /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 		8A7BAD9A2D48943E00CC852C = {
 			isa = PBXGroup;
 			children = (
+				8A7BADD02D48980300CC852C /* Resources */,
 				8A7BADA52D48943E00CC852C /* CoffeeApp */,
 				8A7BADB62D48943F00CC852C /* CoffeeAppTests */,
 				8A7BADC02D48943F00CC852C /* CoffeeAppUITests */,
@@ -102,6 +108,7 @@
 				8A7BAD9F2D48943E00CC852C /* Sources */,
 				8A7BADA02D48943E00CC852C /* Frameworks */,
 				8A7BADA12D48943E00CC852C /* Resources */,
+				8A7BADD62D48990A00CC852C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -109,6 +116,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				8A7BADA52D48943E00CC852C /* CoffeeApp */,
+				8A7BADD02D48980300CC852C /* Resources */,
 			);
 			name = CoffeeApp;
 			packageProductDependencies = (
@@ -230,6 +238,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8A7BADD62D48990A00CC852C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8A7BAD9F2D48943E00CC852C /* Sources */ = {
