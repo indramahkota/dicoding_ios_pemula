@@ -76,6 +76,9 @@ struct CoffeeDetailView: View {
         }
         .padding()
         
+        Text("Region: " + coffee.region)
+          .padding(.bottom, 5)
+        
         Text("Flavor Profile: " + coffee.flavor_profile.joined(separator: ", "))
           .padding(.bottom, 5)
         
@@ -93,28 +96,12 @@ struct CoffeeDetailView: View {
 struct ProfileView: View {
   var body: some View {
     VStack {
-      AsyncImage(url: URL(string: "https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!) { phase in
-        switch phase {
-        case .empty:
-          ProgressView()
-            .progressViewStyle(CircularProgressViewStyle())
-        case .success(let image):
-          image
-            .resizable()
-            .scaledToFill()
-            .frame(width: 100, height: 100)
-            .clipShape(Circle())
-            .padding()
-        case .failure:
-          Image(systemName: "exclamationmark.triangle.fill")
-            .resizable()
-            .frame(width: 100, height: 100)
-            .foregroundColor(.red)
-            .padding()
-        @unknown default:
-          EmptyView()
-        }
-      }
+      Image("IndraMahkota")
+        .resizable()
+        .scaledToFill()
+        .frame(width: 100, height: 100)
+        .clipShape(Circle())
+        .padding()
       
       Text("Indra Mahkota")
         .font(.title2)
