@@ -12,8 +12,21 @@ struct Coffee: Identifiable, Decodable {
   let price: Double
   let region: String
   let weight: Int
-  let flavor_profile: [String]
-  let grind_option: [String]
-  let roast_level: Int
-  let image_url: String
+  let flavorProfile: [String]
+  let grindOption: [String]
+  let roastLevel: Int
+  let imageUrl: String
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case name
+    case description
+    case price
+    case region
+    case weight
+    case flavorProfile = "flavor_profile"
+    case grindOption = "grind_option"
+    case roastLevel = "roast_level"
+    case imageUrl = "image_url"
+  }
 }

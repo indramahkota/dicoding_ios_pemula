@@ -15,7 +15,7 @@ struct ContentView: View {
       List(coffeeList) { coffee in
         NavigationLink(destination: CoffeeDetailView(coffee: coffee)) {
           HStack {
-            AsyncImage(url: URL(string: coffee.image_url)) { image in
+            AsyncImage(url: URL(string: coffee.imageUrl)) { image in
               image.resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
@@ -50,7 +50,7 @@ struct CoffeeDetailView: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading) {
-        AsyncImage(url: URL(string: coffee.image_url)) { image in
+        AsyncImage(url: URL(string: coffee.imageUrl)) { image in
           image.resizable()
             .scaledToFit()
             .cornerRadius(10)
@@ -79,13 +79,13 @@ struct CoffeeDetailView: View {
         Text("Region: " + coffee.region)
           .padding(.bottom, 5)
         
-        Text("Flavor Profile: " + coffee.flavor_profile.joined(separator: ", "))
+        Text("Flavor Profile: " + coffee.flavorProfile.joined(separator: ", "))
           .padding(.bottom, 5)
         
-        Text("Grind Options: " + coffee.grind_option.joined(separator: ", "))
+        Text("Grind Options: " + coffee.grindOption.joined(separator: ", "))
           .padding(.bottom, 5)
         
-        Text("Roast Level: \(coffee.roast_level)")
+        Text("Roast Level: \(coffee.roastLevel)")
           .padding(.bottom, 5)
       }
       .padding()
